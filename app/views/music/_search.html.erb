@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-lg-6">
+      <h4>Tracks Available</h4><hr>
+
+      <% results.each do |track| %>
+        <dl>  
+          <dt>Title</dt>
+          <dd><%= track['track']['title'] %></dd>
+  
+          <dt>Singer</dt>
+          <dd><%= track['track']['subtitle'] %></dd>
+  
+          <dt>Comment</dt>
+          <dd><%= track['track']['share']['twitter'] %></dd>
+        </dl>
+        <hr><br>
+      <% end %>
+    </div>
+  </div>
+</div>
