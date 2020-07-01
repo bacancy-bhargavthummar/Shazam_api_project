@@ -2,10 +2,20 @@ class MusicController < ApplicationController
   def index
   end
 
+  def auto_complete
+    results = auto_complete_track(params[:track].capitalize)
+    @results = results["hints"]
+    unless @results.present?
+      flash[:alert] = 'track not found'
+      return render action: :index
+    end
+    render json: @results
+  end
+
   def search
     results = find_track(params[:track].capitalize)
     @results = results["tracks"]["hits"]
-    unless results
+    unless @results.present?
       flash[:alert] = 'track not found'
       return render action: :index
     end
@@ -17,6 +27,13 @@ class MusicController < ApplicationController
     query = URI.encode(track)
     request_api(
       "https://shazam.p.rapidapi.com/search?locale=en-US&offset=0&limit=10&term=#{query}"
+    )
+  end
+
+  def auto_complete_track(track)
+    query = URI.encode(track)
+    request_api(
+      "https://shazam.p.rapidapi.com/auto-complete?locale=en-US&term=#{query}"
     )
   end
 

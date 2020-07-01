@@ -1,0 +1,56 @@
+render json: @tags.map(&:name).uniq
+
+# RAPIDAPI_API_KEY=f9687893f9mshb718f43cdcc2ec4p1d9757jsncba1405c4e05 rails s
+
+$(document).ready(function(){
+  $(".search_form").submit(function(){
+    var body = $("#form_field").val();
+
+    if (body.length < 1) {
+      alert('Please enter the name song of to search.');
+      return false;
+    }
+  });
+
+  $("#form_field").on("change", function(){
+    var track = this.value;
+    if (track.length > 0 ) {
+      $.ajax({
+        url: "music/auto_complete",
+        type: "GET",
+        data: {
+          track: track
+        },
+        success: function(data){
+          $("#form_field").autocomplete({
+            source: data
+          });
+        },
+        error: function(){
+          alert("Something went wrong")
+        },
+      });
+    } else {
+      return false;
+    }
+  });
+})
+
+$("#form_field").autocomplete({
+    source: function() {
+      var track = $("#form_field").val();
+      $.ajax({
+        url: "music/auto_complete",
+        type: "GET",
+        data: {
+          track: track
+        },
+        success: function(data) {
+          return data;
+        },
+        error: function(){
+          alert("Something went wrong")
+        },
+      });
+    },
+  });
