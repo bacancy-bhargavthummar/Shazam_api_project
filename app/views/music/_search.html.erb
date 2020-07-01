@@ -4,17 +4,22 @@
       <h4>Tracks Available</h4><hr>
 
       <% results.each do |track| %>
+        <%= image_tag ("#{track['track']['share']['image']}") %>
+        <br></br>
         <dl>  
           <dt>Title</dt>
           <dd><%= track['track']['title'] %></dd>
   
           <dt>Singer</dt>
           <dd><%= track['track']['subtitle'] %></dd>
+
+          <dt>Link</dt>
+          <dd><%= link_to "Listen Online", "#{track['track']['share']['href']}", target: "_blank" %></dd>
   
           <dt>Comment</dt>
           <dd><%= track['track']['share']['twitter'] %></dd>
         </dl>
-        <hr><br>
+        <hr><br></br>
       <% end %>
     </div>
   </div>

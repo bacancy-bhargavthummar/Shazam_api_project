@@ -1,6 +1,5 @@
 $(document).ready(function(){
   $(".search_form").submit(function(){
-    debugger
     var body = $("#form_field").val();
 
     if (body.length < 1) {
